@@ -1,6 +1,6 @@
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-//@CŒ¾Œê—pƒvƒƒOƒ‰ƒ€
-//  ’PU“®: Euler–@‚ð—p‚¢‚½ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“
+//ï¿½@Cï¿½ï¿½ï¿½ï¿½ï¿½pï¿½vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½
+//  ï¿½Pï¿½Uï¿½ï¿½: Eulerï¿½@ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Vï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 #include <stdio.h>
@@ -8,28 +8,28 @@
 int main( void )
 {
 
-  double x, v, xb, vb; 
-  double dt, t; 
-  double E; 
+  double x, v, xb, vb;
+  double dt, t;
+  double E;
   int i,N;
- 
-// NFŒJ‚è•Ô‚µ‰ñ” 
+
+// Nï¿½Fï¿½Jï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½
   N = 10000;
 
-// ‚Ý• 
+// ï¿½ï¿½ï¿½Ý•ï¿½
   dt = 1.0e-2;
 
-// ‰Šú’l 
+// ï¿½ï¿½ï¿½ï¿½ï¿½l
   i = 0;
   t = 0.0e0;
   x = 1.0e0;
   v = 0.0e0;
-  
+
   xb = 1.0e0;
   vb = 0.0e0;
-  
+
   printf("%d %e %e %e \n", i, t, x, v );
-    
+
   for(i=0;i<=N;i++){
     t = dt * i;
     x = xb + dt * vb;
@@ -39,10 +39,9 @@ int main( void )
     xb = x;
     vb = v;
     printf("%d %e %e %e \n", i, t, x, v );
-					
-      }
-   
- 
-  return 0;
 
-  
+      }
+
+
+  return 0;
+}
