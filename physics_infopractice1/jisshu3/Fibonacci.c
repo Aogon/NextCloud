@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+  int Fn0=0, Fn1=1, Fn2;
+  double Gn;
+  int i;
+  int N;
+  printf("Nには2以上の整数を入力してください。\nN = ");
+  scanf("%d", &N);
+  printf("Fn0 = 0\nFn1 = 1\n");
+  for(i=2; i<=N; i++){
+    Fn2 = Fn1 + Fn0;
+    Fn0 = Fn1;
+    Fn1 = Fn2;
+    Gn = (1/sqrt(5))*(pow((1+sqrt(5))/2, i)-pow((1-sqrt(5))/2,i));
+    printf("Fn%d = %d, Gn%d = %ld\n", i, Fn2, i, lround(Gn));
+  }
+  return 0;
+}

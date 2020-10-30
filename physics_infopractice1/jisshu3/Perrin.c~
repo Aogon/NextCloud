@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+  int Fn0=3, Fn1=0, Fn2=2, Fn3;
+  int i;
+  int N;
+  printf("Nには3以上の整数を入力してください。\nN = ");
+  scanf("%d", &N);
+  printf("Fn0 = %d\nFn1 = %d\nFn2=%d\n", Fn0, Fn1, Fn2);
+  for(i=3; i<=N; i++){
+    Fn3 = Fn1 + Fn0;
+    Fn0= Fn1;
+    Fn1 = Fn2;
+    Fn2 = Fn3;
+    printf("Fn%d = %d\n", i, Fn3);
+  }
+  return 0;
+}
