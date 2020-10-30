@@ -1,37 +1,57 @@
 #include <stdio.h>
 #include <math.h>
-
+  
 int main(){
-  int Fn0=3, Fn1=0, Fn2=2, Fn3;
+  int Fn0[5] = {3, 0, 0, 0, 0}, Fn1[5]={0, 0, 0, 0, 0},
+    Fn2[5]={2, 0, 0, 0, 0}, Fn3[5]={0, 0, 0, 0, 0};
   int S1=0, S2=0, S3=0, S4=0, S5=0;
   int i;
+  int k;
   int N;
+  int Nmax;
   printf("Nには3以上の整数を入力してください。\nN = ");
   scanf("%d", &N);
-  printf("Fn0 = %d\nFn1 = %d\nFn2=%d\n", Fn0, Fn1, Fn2);
-  for(i=3; i<=N; i++){
-    Fn3 = Fn1 + Fn0;
-    Fn0= Fn1;
-    Fn1 = Fn2;
-    Fn2 = Fn3;
-    S1 = Fn3;
-    if(S1 > 999){
-      S2 += S1/1000;
-      S1 = S1 - (S1/1000) * 1000;
-    }if(S2 > 999){
-      S3 += S2/1000;
-      S2 = S2 - (S2/1000) * 1000;
-    }if(S3 > 999){
-      S4 += S3/1000;
-      S3 = S3 -	(S3/1000) * 1000;
-    }if(S4 > 999){
-      S5 += S4/1000;
-      S2 = S2 -	(S2/1000) * 1000;
-    }if(S2 > 999){
-      S3 += S2/1000;
-      S2 = S2 -	(S2/1000) * 1000;
-    }
-    printf("Fn%d = %d\n", i, Fn3);
+  printf("Fn0 ="); 
+  for(k=4; k>=0; k--){
+    printf("%03d", Fn0[k]);
   }
+  printf("\n");
+  printf("Fn1 ="); 
+  for(k=4; k>=0; k--){
+    printf("%03d", Fn1[k]);
+  }
+  printf("\n");
+  printf("Fn2 ="); 
+  for(k=4; k>=0; k--){
+    printf("%03d", Fn2[k]);
+  }
+  printf("\n");
+  for(i=3; i<=N; i++){
+    int j;
+    for(j=0; j<=4; j++){
+      Fn3[j] = Fn1[j] + Fn0[j];
+    }
+    for(j=0; j<=4; j++){
+      if(Fn3[j] > 999 && j != 4){
+	Fn3[j+1] += Fn3[j]/1000;
+	Fn3[j] = Fn3[j] - (Fn3[j]/1000) * 1000;
+      }if(Fn3[j] > 999 && j == 4){
+	Nmax = i - 1;
+	printf("Nが大きすぎます。\n");
+	goto OUT;
+      }
+      Fn0[j] = Fn1[j];
+      Fn1[j] = Fn2[j];
+      Fn2[j] = Fn3[j];
+      Nmax = i;
+    }
+    printf("Fn%d = ", i);
+    for(j=4; j>=0; j--){
+      printf("%03d", Fn3[j]);
+    }
+    printf("\n");
+  }
+ OUT:
+  printf("N=%dまで求められました。", Nmax);
   return 0;
 }
