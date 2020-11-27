@@ -1,0 +1,10 @@
+#include <stdio.h>
+int naiseki( int *a, int *b){
+         return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+       }
+int main(void){
+   int a[3]={1,2,3}, b[3]={4,5,6};
+//配列a[3]、b[3]の先頭のアドレス a, bを引数にする
+   printf(" a[i]*b[i]=%d \n", naiseki(a, b));
+   return 0;
+}
