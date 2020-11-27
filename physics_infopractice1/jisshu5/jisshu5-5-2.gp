@@ -6,9 +6,8 @@ set nokey                 # 凡例の非表示
 set xrange [0:100]       # x軸方向の範囲の設定
 set yrange [0:100]       # y軸方向の範囲の設定
 set size square           # 図を正方形にする
-
 set term gif animate      # 出力をgifアニメに設定
-set output "sample2.gif"  # 出力ファイル名の設定
+set output "jisshu5-5-2.gif"  # 出力ファイル名の設定
 
 #-------------------------------------------------------------------------------
 # 変数の設定
