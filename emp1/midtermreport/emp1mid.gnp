@@ -1,0 +1,34 @@
+# emp1mid.gnp
+
+#-------------------------------------------------------------------------------
+# 
+#-------------------------------------------------------------------------------
+set size sq
+set view map
+set cbrange[0:1]
+set pm3d explicit map interpolate 10,10
+set surface
+set term pngcairo color enh size 640,640 font ",24"
+
+
+set title '{/Symbol F}(x, y)'
+set xlabel 'x'
+set ylabel 'y'
+
+a = 1
+V = 1
+
+set xrange [-0.1:a+0.1]
+set yrange [-0.1:1]
+
+set cbtics 1
+
+set palette define (0 "light-green", 1 "yellow", 2 "red")
+
+set output "emp1mid.png"
+
+set samples 10000
+unset key
+splot (0<x&&x<a) ? ((y>0) ? (2/pi)*V*atan((sin(pi*x/a))/sinh(pi*y/a)):V):1/0
+
+unset output
