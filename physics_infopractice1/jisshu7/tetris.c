@@ -13,18 +13,13 @@ void init();;
 void convert();
 void show();
 void fall();
+void generate();
 
 int main() {
     init();
     convert();
-    content[5][6]=1;
-    convert();
-    for (int i = 0; i < 5; i++)
-    {
-        sleep(1);
-        fall();
-        convert();
-    }
+    generate();
+    
     
     
     return 0;
@@ -75,10 +70,10 @@ void convert() {
         {
             if (field[i][j] == 0)
             {
-                printf(" ");
+                printf("  ");
             }else if (field [i][j] == 1)
             {
-                printf("■");
+                printf("■ ");
             }
         }
         printf("\n");
@@ -115,6 +110,18 @@ void fall(){
     }
     
     
+}
+void generate(){
+    content[0][content_width/2-1] = 1;
+    content[0][content_width/2] = 1;
+    sleep(1);
+    convert();
+    fall();
+    content[0][content_width/2-1] = 1;
+    content[0][content_width/2] = 1;
+    sleep(1);
+    convert();
+    fall();
 }
 
 //デバッグ用にfieldとcontentの中身を表示
