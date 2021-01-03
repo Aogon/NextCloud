@@ -1,1 +1,1 @@
-focused_new[i-1][j] = false;
+break
