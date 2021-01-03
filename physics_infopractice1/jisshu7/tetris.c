@@ -11,7 +11,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <time.h>
-#define field_width 20
+#define field_width 10
 #define field_height 20
 #define wall_width 1
 #define stage_height 1
@@ -33,7 +33,9 @@ void init();
 void convert();
 void show();
 void fall();
+void set(int x);
 void generate();
+void judge();
 int kbhit(void);
 
 int main() {
@@ -41,9 +43,12 @@ int main() {
     init();
     
     convert();
-    generate();
-    generate();
-    generate();
+    for (int i = 0; i < 30; i++)
+    {
+        generate();
+    }
+    
+    
     
     
     
@@ -178,6 +183,26 @@ void fall(){
                 }
             }
         }
+    }else if(right){
+        for (int i = 0; i < content_height; i++)
+        {
+            for (int j = 0; j < content_width; j++)
+            {
+                if ((focused_new2[i][j] == true || (j-1 >= 0 && focused[i][j-1] == true)))
+                {
+                    if (content_new2[i][j-1] == 1)
+                    {
+                        content_new[i][j] = 1;
+                        focused_new[i][j] = true;
+                        
+                    }else if (content_new2[i][j-1] == 0){
+                        content_new[i][j] = 0;
+                        focused_new[i][j] = false;
+                    }
+                }
+            }
+        }
+
     }
     
     
@@ -193,10 +218,16 @@ void fall(){
                 // printf("leftpart\n");
                 // printf("content_new%d %d = %d, content_new2 %d %d = %d\n", i, j, content_new[i][j], i, j+1, content_new2[i][j+1]);
                 
+            }else if (right &&( (j-1 >= 0) &&(focused_new2[i][j-1])))
+            {
+                content_new[i][j] = content_new2[i][j-1];
+                focused_new[i][j] = focused_new2[i][j-1];
             }
+            
         }
     }
     left = false;
+    right = false;
             
             
     for (int i = 0; i < content_height; i++)
@@ -208,12 +239,7 @@ void fall(){
         }
         
     }
-    if (flag)
-    {
-        // show();
-        flag = false;
-
-    }
+    
     
     
     
@@ -267,7 +293,15 @@ void generate(){
                 // printf("left\n");
             }else if(c=='j')
             {
-                right = true;
+                if ((focused[i][j+2]!=true&&content[i][j+2] == 1)||(focused[i-1][j+2]!=true&&content[i-1][j+2] == 1)||(j+2 >= content_width))
+                {
+                    right = false;
+                }else
+                {
+                    j++;
+                    right = true;
+                }
+                
                 // printf("right\n");
             }
             
@@ -288,6 +322,7 @@ void generate(){
             printf("%d\n", i);
             show();
             convert();
+            judge();
             break;
         }
         sleep(1);
@@ -299,6 +334,62 @@ void generate(){
     
 }
 
+//１列揃ったか判定
+void judge()
+{
+    for (int i = 0; i < content_height; i++)
+    {
+        bool result = true;
+        for (int j = 0; j < content_width; j++)
+        {
+            if (content[i][j] == 0)
+            {
+                result = false;
+                continue;
+            }
+            
+        }
+        if (result)
+        {
+            for (int j = 0; j < content_width; j++)
+            {
+                content[i][j] = 0;
+            }
+            convert();
+            sleep(1);
+            set(i);
+        }
+    }  
+}
+
+void set(int x){
+    int content_new[content_height][content_width];
+    for (int i = 0; i < content_height; i++)
+    {
+        for (int j = 0; j < content_width; j++)
+        {
+            content_new[i][j] = content[i][j];
+        }
+    }
+    for (int i = 1; i <= x; i++)
+    {
+        for (int j = 0; j < content_width; j++)
+        {
+            content_new[i][j] = content[i-1][j];
+        }
+    }
+    for (int i = 0; i < content_width; i++)
+    {
+        content_new[0][i] = 0;
+    }
+    for (int i = 0; i < content_height; i++)
+    {
+        for (int j = 0; j < content_width; j++)
+        {
+            content[i][j] = content_new[i][j];
+        }
+    }
+}
 int kbhit(void)
 {
     struct termios oldt, newt;
@@ -325,60 +416,10 @@ int kbhit(void)
     return 0;
 }
 
-//キーイベントの取得
-// int kbhit(void)
-// {
-//  int ret;
-//  fd_set rfd;
-//  struct timeval timeout = {0,0};
-//  FD_ZERO(&rfd);
-//  FD_SET(0, &rfd); //0:stdin
-//  ret = select(1, &rfd, NULL, NULL, &timeout);
-//  if (ret == 1)
-//  return 1;
-//  else
-//  return 0;
-// }
 
-// int getch(void)
-// {
-//  unsigned char c;
-//  int n;
-//  while ((n = read(0, &c, 1)) < 0 && errno == EINTR) ;
-//  if (n == 0)
-//  return -1;
-//  else
-//  return (int)c;
-// }
 
-// static void onsignal(int sig) //内部利用のシグナルハンドラ
-// {
-//  signal(sig, SIG_IGN);
-//  switch(sig){
-//  case SIGINT:
-//  case SIGQUIT:
-//  case SIGTERM:
-//  case SIGHUP:
-//  exit(1);
-//  break;
-//  }
-// }
-// int tinit(void)
-// {
-//     if (tcgetattr(1, &otty) < 0)
-//     return -1;
-//     ntty = otty;
-//     ntty.c_iflag &= ~(INLCR|ICRNL|IXON|IXOFF|ISTRIP);
-//     ntty.c_oflag &= ~OPOST;
-//     ntty.c_lflag &= ~(ICANON|ECHO);
-//     ntty.c_cc[VMIN] = 1;
-//     ntty.c_cc[VTIME] = 0;
-//     tcsetattr(1, TCSADRAIN, &ntty);
-//     signal(SIGINT, onsignal);
-//     signal(SIGQUIT, onsignal);
-//     signal(SIGTERM, onsignal);
-//     signal(SIGHUP, onsignal);
-// }
+
+
 
 //デバッグ用にfieldとcontentの中身を表示
 void show(){
@@ -412,9 +453,6 @@ void show(){
             {
                 printf("0");
             }
-            
-            
-            
         }
         printf("\n");
     }
