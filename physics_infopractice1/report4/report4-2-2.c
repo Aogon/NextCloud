@@ -7,10 +7,12 @@ double convert(double x, double a, double b);
 
 
 int main() {
+    FILE *fp_q;
+    fp_q = fopen("report4-2-2.dat", "w");
     srand((unsigned int)time(NULL));
     double x[3], sum = 0.;
     int N=0, N0[7];
-    const double a[3] = {1., 2., 3.}, V0=(2*a[0])*(2*a[1])*(2*a[2]);
+    const double a[3] = {1., 2., 3.}, V0=(2*a[0])*(2*a[1])*(2*a[2]), V1=4. * M_PI * a[0] * a[1] * a[2] / 3.;
     N0[0] = 100;
     for (int i = 1; i < 7; i++)
     {
@@ -33,12 +35,9 @@ int main() {
             sum = 0.;
         
         }
-        printf("N0 = %d, (N/N0) × V0 = %f\n", N0[k],((double)N/(double)N0[k]) * V0);
+        fprintf(fp_q, "%d %d %f %f\n", k, N0[k],((double)N/(double)N0[k]) * V0, (fabs(V1 - ((double)N/(double)N0[k]) * V0))/V1);
         N = 0;
     }
-    
-    
-    
     return 0;
 }
 
