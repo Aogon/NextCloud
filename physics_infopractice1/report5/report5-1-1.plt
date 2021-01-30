@@ -9,7 +9,7 @@ if(exist("n")==0 || n<0) n = n0  # ループ変数の初期化
 # プロット
 #-------------------------------------------------------------------------------
 unset label
-set label sprintf("t = %d", n) at screen 0.05,0.9
+set label sprintf("t = %d", n) at screen 0.8,0.8
 plot "report5-1-1.dat"  index n using 0:2:xtic(1) with boxes # n番目のデータのプロット
 
 

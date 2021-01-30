@@ -3,6 +3,9 @@
 #-------------------------------------------------------------------------------
 reset
 set nokey                 # 凡例の非表示
+set title "Changes in number of air molecules"
+set xlabel 'index'
+set ylabel 'N'
 set xrange [-1:3]
 set yrange [0:10000]
 set term gif animate      # 出力をgifアニメに設定
