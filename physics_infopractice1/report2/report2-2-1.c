@@ -2,6 +2,8 @@
 #include<math.h>
 
 int main(){
+    FILE *fp_q;
+    fp_q = fopen("report2-2-1.dat", "w");
     int N= 631;
     const double e = 0.5;
     const double dt = 0.01;
@@ -19,7 +21,7 @@ int main(){
         u[0] = u[0] - dt * x[0] / pow(r, 3);
         u[1] = u[1] - dt * x[1] / pow(r, 3);
         E = (u[0] * u[0] + u[1] * u[1]) / 2 - 1 / r;
-        printf("%e %e %e %e %e %e \n", time, x[0], x[1], u[0], u[1], E);
+        fprintf(fp_q, "%e %e %e %e %e %e \n", time, x[0], x[1], u[0], u[1], E);
     }
     
     return 0;

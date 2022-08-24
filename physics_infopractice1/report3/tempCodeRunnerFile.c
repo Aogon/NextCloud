@@ -1,0 +1,1 @@
+printf("%e\n", func(Theta1, e, ti));
